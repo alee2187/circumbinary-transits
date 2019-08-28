@@ -109,5 +109,5 @@ variables to set up to start running large-scale simulations.
 
 Create the binary detection system, make some way to store the system parameters
 and organize by the detection code. Once there, running simulations and such seems
-like the logical next step. But, consult with Kipping before we proceed. 
+like the logical next step. 
 '''
