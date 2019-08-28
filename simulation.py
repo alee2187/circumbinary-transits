@@ -6,7 +6,7 @@ from mpl_toolkits import mplot3d
 import numpy as np
 import time as tm
 import random
-from cb_functions2 import *
+from functions import *
 from constants import *
 
 
