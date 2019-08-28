@@ -18,7 +18,7 @@ This file contains the functions that are used in the main code (e.g., time() ge
 
 ### simulation.py
 
-This file houses the main simulation, which takes a given circumbinary system and prints the number of transits of the planet over each star per epoch. The code is set to three epochs, but this can be changed.
+This file houses the main simulation, which takes a given circumbinary system and prints the number of transits of the planet over each star per epoch. The code is set to three epochs, but this can be changed. There is also functionality to graph the orbits of the system in 3D. 
 
 ### kepler16b.txt
 
@@ -26,14 +26,4 @@ This file contains the data for the Kepler-16b circumbinary planet, which gets i
 
 ## Example
 
-
-
-
-
-<!-- 
-To do: 
-write documentation for code
-desc of files
-tutorial
-example
- -->
+The simulation.py file contains an example of the signatures being produced for the Kepler-16b system. Running the code gives us that the planet transits star A once per epoch, but transits star B 3, 0, and 1 time(s) in each of the three epochs, respectively. 
