@@ -19,25 +19,25 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.collections import LineCollection
 
 
-def G(m, l, t):  # Value of Universal Gravitational Constant G
+def G(mass, length, time):  # Value of Universal Gravitational Constant G
     G_const = 6.67408 * 10**-11
-    if (m == 'kg' and l == 'm' and t == 's'):
+    if (mass == 'kg' and length == 'm' and time == 's'):
         G_const = 6.67408 * 10**-11
-    elif (m == 'solar' and l == 'solar' and t == 'days'):
+    elif (mass == 'solar' and length == 'solar' and time == 'days'):
         G_const = 2942
-    elif (m == 'solar' and l == 'm' and t == 'days'):
+    elif (mass == 'solar' and length == 'm' and time == 'days'):
         G_const = 9.91 * 10**29
-    elif (m == 'solar' and l == 'km' and t == 'days'):
+    elif (mass == 'solar' and length == 'km' and time == 'days'):
         G_const = 9.91 * 10**20
-    elif (m == 'solar' and l == 'AU' and t == 'days'):
+    elif (mass == 'solar' and length == 'AU' and time == 'days'):
         G_const = 2.959 * 10**-4
-    elif (m == 'earth' and l == 'earth' and t == 'days'):
+    elif (mass == 'earth' and length == 'earth' and time == 'days'):
         G_const = 11470
-    elif (m == 'earth' and l == 'm' and t == 'days'):
+    elif (mass == 'earth' and length == 'm' and time == 'days'):
         G_const = 2.975 * 10**24
-    elif (m == 'earth' and l == 'km' and t == 'days'):
+    elif (mass == 'earth' and length == 'km' and time == 'days'):
         G_const = 2.975 * 10**15
-    elif (m == 'earth' and l == 'AU' and t == 'days'):
+    elif (mass == 'earth' and length == 'AU' and time == 'days'):
         G_const = 8.887 * 10**-10
     return G_const
 
@@ -64,9 +64,9 @@ def HW99(e, mu):
         (-5.09 * mu**2) + (-4.27 * e * mu) + (4.61 * (e * mu)**2)
     return r
 
-def mu(mass_a, mass_b):
-    mu = mass_a / (mass_a + mass_b)
-    mu = min(mu, 1 - mu)
+def mucalc(mass_a, mass_b):
+    mu = mass_b / (mass_a + mass_b)
+    #mu = min(mu, 1 - mu)
     return mu
 
 def input(data=""):
@@ -180,3 +180,67 @@ def eucdist(x1, x2, y1, y2):
     d = ((x2-x1)**2 + (y2-y1)**2)**0.5
     return d
 
+def simulation(mass_a, mass_b, radius_a, radius_b, radius_p, a_s, e_s, e_p, i_s, i_p, Omega_p, w_s, w_p, M0_s, M0_p, n_periods=3, res=1e5, tol=1e-6):
+    '''
+    simulation: Runs the simulation with the given parameters and returns signatures for A and B. 
+    
+    '''
+    if (mass_a < mass_b):
+        dummy_mass = mass_b
+        mass_b = mass_a
+        mass_a = dummy_mass
+    mu = mucalc(mass_a, mass_b)
+    a_a = mu * a_s
+    a_b = (1-mu) * a_s
+    a_p = 1.336 * HW99(e_p, mu) * a_s
+    per_s = a_to_P(a_s, mass_a + mass_b, G('kg','m','s'))
+    per_p = a_to_P(a_p, mass_a + mass_b, G('kg','m','s'))
+    # i_s = 90
+    # i_p = 90
+    Omega_s = 0
+    # Omega_p = 0
+    f_s, rho_s, res = time(per_s, e_s, per_p, n_periods)  # Import true anomaly and rho from time function
+    f_p, rho_p, res = time(per_p, e_p, per_p, n_periods)
+    X_a = [0] * res
+    Y_a = [0] * res
+    Z_a = [0] * res
+    X_b = [0] * res
+    Y_b = [0] * res
+    Z_b = [0] * res
+    X_p = [0] * res
+    Y_p = [0] * res
+    Z_p = [0] * res
+    for i in range(0, res):
+        X_a[i] = a_a * rho_s[i] * (math.cos(Omega_s) * math.cos(w_s + f_s[i]) -
+                                math.sin(Omega_s) * math.sin(w_s + f_s[i]) * math.cos(i_s))
+        Y_a[i] = a_a * rho_s[i] * (math.sin(Omega_s) * math.cos(w_s + f_s[i]) +
+                                math.cos(Omega_s) * math.sin(w_s + f_s[i]) * math.cos(i_s))
+        Z_a[i] = a_a * rho_s[i] * (math.sin(w_s + f_s[i]) * math.sin(i_s))
+        X_b[i] = -a_b * rho_s[i] * (math.cos(Omega_s) * math.cos(w_s + f_s[i]) -
+                                math.sin(Omega_s) * math.sin(w_s + f_s[i]) * math.cos(i_s))
+        Y_b[i] = -a_b * rho_s[i] * (math.sin(Omega_s) * math.cos(w_s + f_s[i]) +
+                                math.cos(Omega_s) * math.sin(w_s + f_s[i]) * math.cos(i_s))
+        Z_b[i] = -a_b * rho_s[i] * (math.sin(w_s + f_s[i]) * math.sin(i_s))
+        X_p[i] = a_p * rho_p[i] * (math.cos(Omega_p) * math.cos(w_p + f_p[i]) -
+                                math.sin(Omega_p) * math.sin(w_p + f_p[i]) * math.cos(i_p))
+        Y_p[i] = a_p * rho_p[i] * (math.sin(Omega_p) * math.cos(w_p + f_p[i]) +
+                                math.cos(Omega_p) * math.sin(w_p + f_p[i]) * math.cos(i_p))
+        Z_p[i] = a_p * rho_p[i] * (math.sin(w_p + f_p[i]) * math.sin(i_p))
+    d_ap = [0,0]
+    d_bp = [0,0]
+    signature_a = [0] * n_periods # signature (code) for planet over star A
+    signature_b = [0] * n_periods # signature (code) for planet over star B
+    per_p_timestep = res / n_periods # one orbital period in units of time string_types
+    for i in range(0,res): 
+        d_ap[1] = eucdist(X_a[i], X_p[i], Y_a[i], Y_p[i]) # distance in XY plane of A,P
+        d_bp[1] = eucdist(X_b[i], X_p[i], Y_b[i], Y_p[i]) # distance in XY plane of B,P
+        for j in range(0, n_periods):
+            if (j * per_p_timestep < i and i < (j+1) * per_p_timestep):
+                if (d_ap[1] <= radius_a + radius_p and Z_p[i] > Z_a[i] and d_ap[0] > radius_a + radius_p):
+                    signature_a[j] += 1
+                if (d_bp[1] <= radius_b + radius_p and Z_p[i] > Z_b[i] and d_bp[0] > radius_b + radius_p):
+                    signature_b[j] += 1
+        d_ap[0] = d_ap[1]
+        d_bp[0] = d_bp[1]
+
+    return signature_a, signature_b
