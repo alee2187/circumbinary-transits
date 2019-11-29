@@ -14,7 +14,7 @@ This file contains the functions that are used in the simulation.
 
 ### system.py
 
-This file houses the code for the System class, which is used to model a circumbinary planet system. It is instantiated by specifying the mass ratio, binary and orbital eccentricity, radii of each body, and the inclination. The simulation runs for a default of three periods, and takes 10<sup>5</sup> data points per simulation. There is also functionality to plot the orbits of the system in 3D. 
+This file houses the code for the <code>System</code> class, which is used to model a circumbinary planet system. It is instantiated by specifying the mass ratio, binary and orbital eccentricity, radii of each body, and the inclination. The simulation runs for a default of three periods, and takes 10<sup>5</sup> data points per simulation. There is also functionality to plot the orbits of the system in 3D. 
 
 ### test.py
 
@@ -23,5 +23,5 @@ This file contains an example system, with numbers matching the circumbinary sys
 
 ## Example
 
-Here are some example plots of the Kepler 16b system, the outputs of test.py. 
+Here are some example plots of the Kepler 16b system, the outputs of <code>test.py</code>. 
 <!-- work in progress. need to plot and show some nice graphics. maybe write a gif to show the orbit in real time around a transit? -->
