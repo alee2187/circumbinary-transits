@@ -14,7 +14,7 @@ This file contains the functions that are used in the simulation.
 
 ### system.py
 
-This file houses the code for the System class, which is used to model a circumbinary planet system. It is instantiated by specifying the mass ratio, binary and orbital eccentricity, radii of each body, and the inclination. The simulation runs for a default of three periods, and takes $10^5$ data points per simulation. There is also functionality to plot the orbits of the system in 3D. 
+This file houses the code for the System class, which is used to model a circumbinary planet system. It is instantiated by specifying the mass ratio, binary and orbital eccentricity, radii of each body, and the inclination. The simulation runs for a default of three periods, and takes 10<sup>5</sup> data points per simulation. There is also functionality to plot the orbits of the system in 3D. 
 
 ### test.py
 
