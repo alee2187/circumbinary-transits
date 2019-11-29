@@ -20,6 +20,8 @@ mu, radius_a, radius_b, radius_p, a_s, e_s, e_p, i_s, i_p, Omega_p, w_s, w_p, M0
 Other parameters to specify: 
 n_periods, res, tol
 
+
+
 mu: [0,0.5]
 radius_a (Rsun): [,]
 radius_b (Rsun): [,]
@@ -36,21 +38,21 @@ M0_s (deg): [0,360]
 M0_p (deg): [0,360]
 '''
 def datain(grid=10):
-	mass_a = np.linspace(0.6897, 1.47, grid)
-	mass_b = np.linspace(0.1951, 1.0208, grid)
-	radius_a = np.linspace(0.6489, 1.79, grid)
-	radius_b = np.linspace(0.2143, 1.0927, grid)
-	radius_p = np.linspace(0.25, 1.05, grid)
-	a_s = np.linspace(0.0836, 0.22882, grid)
-	e_s = np.linspace(0.023,0.521,grid)
-	e_p = np.linspace(0.007,0.411,grid)
-	i_s = np.linspace(87,93,grid)
-	i_p = np.linspace(87,93,grid)
-	Omega_p = np.linspace(-2,2,grid)
-	w_s = np.linspace(0,359,grid)
-	w_p = np.linspace(0,359,grid)
-	M0_s = np.linspace(0,359,grid)
-	M0_p = np.linspace(0,359,grid)
+	mass_a = np.linspace(0.6897, 1.47, grid) # random
+	mass_b = np.linspace(0.1951, 1.0208, grid) # random
+	radius_a = np.linspace(0.6489, 1.79, grid) # random
+	radius_b = np.linspace(0.2143, 1.0927, grid) # random
+	radius_p = np.linspace(0.25, 1.05, grid) # random
+	a_s = np.linspace(0.0836, 0.22882, grid) # random
+	e_s = np.linspace(0.023,0.521,grid) # set
+	e_p = np.linspace(0.007,0.411,grid) # set
+	i_s = np.linspace(87,93,grid) # set
+	i_p = np.linspace(87,93,grid) # set
+	Omega_p = np.linspace(-2,2,grid) # random
+	w_s = np.linspace(0,359,grid) # random
+	w_p = np.linspace(0,359,grid) # random
+	M0_s = np.linspace(0,359,grid) # Random
+	M0_p = np.linspace(0,359,grid) # Random
 
 	mass_a *= MSUN_KG
 	mass_b *= MSUN_KG
